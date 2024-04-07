@@ -5,10 +5,8 @@ import sys
 import torch.nn as nn
 import torch.nn.functional as F
 
-
-
 proj_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(proj_dir, "utils/Pointnet2.PyTorch/pointnet2"))
+sys.path.append(os.path.join(proj_dir, "../votenet/pointnet2/"))
 import pointnet2_utils as pn2
 sys.path.append(os.path.join(proj_dir, "utils/emd"))
 import emd_module as emd

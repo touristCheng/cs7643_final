@@ -2,7 +2,7 @@ batch_size: 32
 workers: 0
 nepoch: 100
 model_name: vrcnet
-load_model: null
+load_model: pretrained_vrcnet_2048.pth
 start_epoch: 0
 num_points: 2048
 work_dir: log/
@@ -10,7 +10,7 @@ flag: debug
 loss: cd
 manual_seed: null
 use_mean_feature: False
-step_interval_to_print: 500
+step_interval_to_print: 10
 epoch_interval_to_save: 1
 epoch_interval_to_val: 1
 varying_constant: 0.01, 0.1, 0.5, 1

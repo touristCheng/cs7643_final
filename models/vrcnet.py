@@ -7,8 +7,6 @@ import torch.nn.functional as F
 from utils.model_utils import *
 from models.pcn import PCN_encoder
 
-proj_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(os.path.join(proj_dir, "utils/Pointnet2.PyTorch/pointnet2"))
 import pointnet2_utils as pn2
 
 
