@@ -92,7 +92,10 @@ class Linear_ResBlock(nn.Module):
         self.af = nn.ReLU(inplace=True)
 
     def forward(self, feature):
-        return self.conv2(self.af(self.conv1(self.af(feature)))) + self.conv_res(feature)
+        feat1 = self.conv2(self.af(self.conv1(self.af(feature))))
+        feat2 = self.conv_res(feature)
+        feat = feat1 + feat2
+        return  feat
 
 
 class SK_SA_module(nn.Module):
