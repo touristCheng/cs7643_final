@@ -10,3 +10,6 @@ pip install plyfile
 pip install matplotlib
 pip install trimesh==2.35.39
 pip install networkx==2.2
+
+cd ./Pointnet2_PyTorch
+pip install -r requirements.txt
