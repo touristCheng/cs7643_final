@@ -2,7 +2,7 @@ batch_size: 32
 workers: 0
 nepoch: 100
 model_name: vrcnet
-load_model: ckpts/pretrained_vrcnet_2048.pth
+load_model: null
 start_epoch: 0
 num_points: 2048
 work_dir: log/
