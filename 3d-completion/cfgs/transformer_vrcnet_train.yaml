@@ -1,7 +1,7 @@
 batch_size: 32
 workers: 0
 nepoch: 5
-model_name: vrcnet
+model_name: transformer_vrcnet
 load_model: null
 start_epoch: 0
 num_points: 2048
