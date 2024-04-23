@@ -112,21 +112,21 @@ class PointTransformerEncoderSmall(nn.Module):
         print("build transformer encoder!")
 
         # map the second dim of the input from input_dim to 64
-        self.conv1 = nn.Conv1d(input_dim, 64, kernel_size=1, bias=False)
-        self.bn1 = nn.BatchNorm1d(64)
+        self._conv1 = nn.Conv1d(input_dim, 64, kernel_size=1, bias=False)
+        self._bn1 = nn.BatchNorm1d(64)
         self.gather_local_0 = Local_op(in_channels=128, out_channels=64)
         self.gather_local_1 = Local_op(in_channels=128, out_channels=64)
         self.pt_last = StackedAttention(channels=64)
 
         self.relu = nn.ReLU()
-        self.conv_fuse = nn.Sequential(nn.Conv1d(192, 256, kernel_size=1, bias=False),
-                                       nn.BatchNorm1d(256),
-                                       nn.LeakyReLU(negative_slope=0.2))
+        self._conv_fuse = nn.Sequential(nn.Conv1d(192, 256, kernel_size=1, bias=False),
+                                        nn.BatchNorm1d(256),
+                                        nn.LeakyReLU(negative_slope=0.2))
 
-        self.linear1 = nn.Linear(256, 256, bias=False)
-        self.bn6 = nn.BatchNorm1d(256)
+        self._linear1 = nn.Linear(256, 512, bias=False)
+        self._bn6 = nn.BatchNorm1d(512)
         self.dp1 = nn.Dropout(p=dropout)
-        self.linear2 = nn.Linear(256, output_dim)
+        self._linear2 = nn.Linear(512, output_dim)
 
     def forward(self, xyz, f=None):
         # xyz: (B, 3, N)
@@ -153,7 +153,7 @@ class PointTransformerEncoderSmall(nn.Module):
         xyz = x[..., :3]
         x = x.permute(0, 2, 1)
         batch_size, _, _ = x.size()
-        x = self.relu(self.bn1(self.conv1(x)))  # B, D, N
+        x = self.relu(self._bn1(self._conv1(x)))  # B, D, N
         x = x.permute(0, 2, 1)
         new_xyz, new_feature = sample_and_group(npoint=128, nsample=32, xyz=xyz, points=x)
         feature_0 = self.gather_local_0(new_feature)
@@ -163,13 +163,13 @@ class PointTransformerEncoderSmall(nn.Module):
 
         x = self.pt_last(feature_1)  # B, D * 2, nsamples
         x = torch.cat([x, feature_1], dim=1)  # B, D * 3, nsamples
-        x = self.conv_fuse(x)
+        x = self._conv_fuse(x)
         x = torch.max(x, 2)[0]
         x = x.view(batch_size, -1)
 
-        x = self.relu(self.bn6(self.linear1(x)))
+        x = self.relu(self._bn6(self._linear1(x)))
         x = self.dp1(x)
-        x = self.linear2(x)
+        x = self._linear2(x)
 
         return x
 

@@ -79,7 +79,8 @@ def train():
 
     if args.load_model:
         ckpt = torch.load(args.load_model)
-        net.module.load_state_dict(ckpt['net_state_dict'])
+        net.module.load_state_dict(ckpt['net_state_dict'], strict=False)
+        print("May load partial checkpoint ...")
         if cascade_gan:
             net_d.module.load_state_dict(ckpt['D_state_dict'])
         logging.info("%s's previous weights loaded." % args.model_name)

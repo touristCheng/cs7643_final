@@ -2,7 +2,7 @@ batch_size: 32
 workers: 0
 nepoch: 5
 model_name: transformer_vrcnet
-load_model: null
+load_model: ckpts/pretrained_vrcnet_2048.pth
 start_epoch: 0
 num_points: 2048
 work_dir: log/

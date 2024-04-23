@@ -415,7 +415,7 @@ class Model(nn.Module):
         self.distribution_loss = args.distribution_loss
         self.train_loss = args.loss
         # self.encoder = PCN_encoder(output_size=global_feature_size)
-        self.encoder = PointTransformerEncoderSmall(output_dim=global_feature_size)
+        self.encoder = PointTransformerEncoderSmall(output_dim=global_feature_size, dropout=0.2)
         self.posterior_infer1 = Linear_ResBlock(input_size=global_feature_size, output_size=global_feature_size)
         self.posterior_infer2 = Linear_ResBlock(input_size=global_feature_size, output_size=size_z * 2)
         self.prior_infer = Linear_ResBlock(input_size=global_feature_size, output_size=size_z * 2)
