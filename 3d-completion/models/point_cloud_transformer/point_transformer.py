@@ -14,7 +14,7 @@ def sample_and_group(npoint, nsample, xyz, points):
     fps_idx = farthest_point_sample(xyz, npoint) # [B, npoint]
 
     new_xyz = index_points(xyz, fps_idx) 
-    new_points = index_points(points, fps_idx)
+    new_points = index_points(points, fps_idx) # anchor
 
     dists = square_distance(new_xyz, xyz)  # B x npoint x N
     idx = dists.argsort()[:, :, :nsample]  # B x npoint x K
