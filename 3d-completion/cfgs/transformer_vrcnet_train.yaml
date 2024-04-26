@@ -1,6 +1,6 @@
 batch_size: 32
 workers: 0
-nepoch: 10
+nepoch: 30
 model_name: transformer_vrcnet
 load_model: ckpts/best_f1_network.pth
 start_epoch: 0
