@@ -41,6 +41,7 @@ def plot_single_pcd(points, save_path):
     pcd = pcd.transform(rotation_matrix)
     X, Y, Z = get_pts(pcd)
     t = Z
+    #print("Plot Z shape: ", Z.shape)
     ax.scatter(X, Y, Z, c=t, cmap='jet', marker='o', s=0.5, linewidths=0)
     ax.grid(False)
     ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
@@ -51,8 +52,26 @@ def plot_single_pcd(points, save_path):
     plt.savefig(save_path, format='png', dpi=600)
     plt.close()
 
-
-
+def plot_map(points, attr_map, save_path):
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+    ax.set_aspect('equal')
+    pcd = o3d.geometry.PointCloud(o3d.utility.Vector3dVector(points))
+    rotation_matrix = np.asarray([[1, 0, 0, 0], [0, 0, -1, 0], [0, 1, 0, 0], [0, 0, 0, 1]])
+    pcd = pcd.transform(rotation_matrix)
+    X, Y, Z = get_pts(pcd)
+    saliency_values = attr_map.squeeze().cpu().detach().numpy()
+    saliency_values = np.abs(saliency_values).sum(axis=1)
+    ax.scatter(X, Y, Z, c=saliency_values, cmap='hot', linewidths=0)
+    ax.grid(False)
+    ax.w_xaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+    ax.w_yaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+    ax.w_zaxis.set_pane_color((1.0, 1.0, 1.0, 1.0))
+    set_axes_equal(ax)
+    plt.gca().set_facecolor('gray')
+    plt.axis('off')
+    plt.savefig(save_path, format='png', dpi=600)
+    plt.close()
 
 
 
