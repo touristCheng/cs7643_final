@@ -24,12 +24,13 @@ def test():
     dataset_length = len(dataset_test)
     logging.info('Length of test dataset:%d', len(dataset_test))
 
+    pics_dir = 'pics_' + args.model_name
     if args.save_vis:
-        save_gt_path = os.path.join(log_dir, 'pics', 'gt')
-        save_partial_path = os.path.join(log_dir, 'pics', 'partial')
-        save_completion_path = os.path.join(log_dir, 'pics', 'completion')
-        save_debugging_path = os.path.join(log_dir, 'pics', 'debugging')
-        save_saliency_path = os.path.join(log_dir, 'pics', 'saliency')
+        save_gt_path = os.path.join(log_dir, pics_dir, 'gt')
+        save_partial_path = os.path.join(log_dir, pics_dir, 'partial')
+        save_completion_path = os.path.join(log_dir, pics_dir, 'completion')
+        save_debugging_path = os.path.join(log_dir, pics_dir, 'debugging')
+        save_saliency_path = os.path.join(log_dir, pics_dir, 'saliency')
         os.makedirs(save_gt_path, exist_ok=True)
         os.makedirs(save_partial_path, exist_ok=True)
         os.makedirs(save_completion_path, exist_ok=True)
